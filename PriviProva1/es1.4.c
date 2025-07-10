@@ -3,6 +3,7 @@ ES 1.4
 Scrivere un sottoprogramma denominato "Divisori" che prende in input un numero 
 positivo e restituisce l'insieme dei suoi divisori.
 Realizzare una struttura dati opportuna e motivare la propria scelta.
+Genera un main che testa la funzione.
 ------------------------------------------------------------------------------------*/
 
 #include <stdio.h>
@@ -13,39 +14,31 @@ typedef struct DivisoriList{
     struct DivisoriList* next;
 } DivisoriList;
 
-
-DivisoriList* sottoprogramma(int n){
-    if(n<0){
-        return NULL;
-    }
-    DivisoriList* divisori = (DivisoriList*)malloc(sizeof(DivisoriList));
-    DivisoriList* corrente = divisori;
+DivisoriList* Divisori(int n){
+    if(n<1) return NULL;
+    DivisoriList *head = NULL, *tail = NULL;
     for(int i=1; i<=n; i++){
-        if(i==1){
-            corrente->divisore =i;
-        }else{
-            if(n%i==0){
-                corrente->next = (DivisoriList*)malloc(sizeof(DivisoriList));
-                corrente = corrente->next;
-                corrente->divisore =i;
+        if(n%i==0){
+            DivisoriList* nuovo = malloc(sizeof(DivisoriList));
+            nuovo->divisore = i;
+            nuovo->next = NULL;
+            if(!head){
+                head = nuovo;
+                tail = nuovo;
+            }else{
+                tail->next = nuovo;
+                tail = nuovo;
             }
         }
     }
-    return divisori;
-}
-
-void printDivisori(DivisoriList* lista){
-    DivisoriList* corrente = lista;
-    while(corrente !=NULL){
-        printf("\n%d",corrente->divisore);
-        corrente = corrente->next;
-    }
+    return head;
 }
 
 int main(){
-    DivisoriList* lista = sottoprogramma(8);
-    printDivisori(lista);
-    free(lista);
-    lista=NULL;
+    int n = 8;
+    DivisoriList* lista = Divisori(n);
+    // Stampa dei divisori (solo per test, richiesta dal main)
+    for(DivisoriList* curr = lista; curr; curr = curr->next)
+        printf("%d\n", curr->divisore);
     return 0;
 }

@@ -4,104 +4,46 @@ Definisci tipo opportuno "frac_t" per realizzare lista i cui elementi rappresent
 frazioni definite come due "int". Scrivi poi un sottoprogramma che, ricevuta 
 la lista head del tipo definito e una variabile soglia dello stesso tipo, 
 restituisca il numero di frazioni della lista il cui valore è strettamente 
-inferiore alla soglia ricevuta.
+inferiore alla soglia ricevuta. Genera un main che testa la funzione.
 ------------------------------------------------------------------------------------*/
 
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct frac_t{
-    int numeratore;
-    int denominatore;
+// definizione del tipo frazione
+typedef struct {
+    int numeratore, denominatore;
 } frac_t;
 
-
-typedef struct Node{
+// nodo della lista
+typedef struct Node {
     frac_t data;
     struct Node* next;
 } Node;
 
-typedef struct List{
-    Node* head;
-    int elements;
-} List;
-
-
-List* initList() {
-    List* list = (List*)malloc(sizeof(List));
-    if (list == NULL) {
-        printf("Errore di allocazione memoria.\n");
-        return NULL;
-    }
-    list->head = NULL;
-    list->elements = 0;
-    return list;
-}
-
-int addHead(List* list, frac_t dato) {
-    Node* nodo = (Node*)malloc(sizeof(Node));
-    if (nodo == NULL) {
-        printf("Errore di allocazione memoria.\n");
-        return 1;
-    }
-    nodo->data.numeratore = dato.numeratore;
-    nodo->data.denominatore = dato.denominatore;
-    nodo->next = list->head;
-    list->head = nodo;
-    list->elements++;
-    return 0;
-}
-frac_t generaNumero(int numeratore, int denominatore){
-    frac_t num;
-    num.numeratore = numeratore;
-    num.denominatore = denominatore;
-    return num;
-}
-
-int sottoprogramma(List* list, frac_t soglia){
+// sottoprogramma che conta le frazioni minori della soglia
+int contaMinori(Node* head, frac_t soglia) {
     int counter = 0;
-    double numero = 0;
-    double sogliaReale = (double)(soglia.numeratore) / (soglia.denominatore);
-    if (list->elements == 0) {
-        printf("\nLa lista è vuota.");
-        return -1;
-    }
-    Node* corrente = list->head;
-    while(corrente != NULL){
-        numero = (double)(corrente->data.numeratore) / (corrente->data.denominatore);
-        if(numero<sogliaReale){
-            //printf("\nnumero: %l")
+    double sogliaReale = (double)soglia.numeratore / soglia.denominatore;
+    for (Node* curr = head; curr != NULL; curr = curr->next) {
+        double valore = (double)curr->data.numeratore / curr->data.denominatore;
+        if (valore < sogliaReale)
             counter++;
-        }
-        corrente = corrente->next;
     }
     return counter;
 }
 
-int printList(List* list) {
-    if (list->elements == 0) {
-        printf("\nLa lista è vuota.");
-        return 1;
-    }
-    Node* corrente = list->head;
-    printf("Lista: ");
-    while (corrente != NULL) {
-        printf("\n%d/%d", corrente->data.numeratore, corrente->data.denominatore); 
-        corrente = corrente->next;
-    }
-    printf("\nelements: %d", list->elements);
-    return 0;
-}
-
-int main(){
-    List* lista = initList();
-    for(int i=1;i<6;i++){
-        addHead(lista, generaNumero(1,i));
-    }
-    printList(lista);
-    frac_t soglia;
-    soglia.numeratore =1;
-    soglia.denominatore = 2;
-    printf("\nI numeri minori di 1/2 sono: %d", sottoprogramma(lista, soglia));
+int main() {
+    // creo una lista di frazioni manualmente per il test
+    Node* lista = NULL;
+    Node* n1 = malloc(sizeof(Node));
+    Node* n2 = malloc(sizeof(Node));
+    Node* n3 = malloc(sizeof(Node));
+    n1->data.numeratore = 1; n1->data.denominatore = 3; n1->next = n2;
+    n2->data.numeratore = 2; n2->data.denominatore = 3; n2->next = n3;
+    n3->data.numeratore = 3; n3->data.denominatore = 4; n3->next = NULL;
+    lista = n1;
+    frac_t soglia = {1, 2};
+    printf("Numero di frazioni minori di 1/2: %d\n", contaMinori(lista, soglia));
     return 0;
 }

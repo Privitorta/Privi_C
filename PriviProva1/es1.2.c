@@ -7,44 +7,52 @@ sempre unico)  e visualizzi il contenuto dell'array, mostrando uno spazio invece
 dei caratteri diversi da "car". 
 Il sottoprogramma trasmette poi il carattere individuato e il numero di volte che compare.
 La matrice va stampata, ma non restituita dalla funzione, e non va nemmeno modificata.
+Genera un main che testa la funzione.
 ------------------------------------------------------------------------------------ */
-#include <stdio.h>
-#include <stdlib.h>
 
-void sottoprogramma(char* matrix, int righe, char* carattereTrovato, int* frequenza){
+#include <stdio.h>
+
+typedef struct {
+    char carattere;
+    int frequenza;
+} risultato;
+
+risultato sottoprogramma(int n, char matrix[n][n]) {
     int ascii[256] = {0};
-    int val;
-    for(int i=0;i<righe*righe;i++){
-        val = (int)matrix[i];
-        ascii[val]++;
-    }
-    val=0;
-    for(int i=0;i<256;i++){
-       if(ascii[i]>val){
-           val=i;
-           *frequenza=ascii[i];
-       } 
-    }
-    *carattereTrovato=(char)val;
-    
-    for(int i=0;i<righe*righe;i++){
-        if((int)matrix[i]!=val){
-            printf(" ");
-        }else{
-            printf("%c",matrix[i]);
+    // conta le occorrenze
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            ascii[(unsigned char)matrix[i][j]]++;
+
+    // trova il carattere più frequente
+    int max = 0;
+    char car = 0;
+    for (int i = 0; i < 256; i++) {
+        if (ascii[i] > max) {
+            max = ascii[i];
+            car = (char)i;
         }
     }
+
+    // stampa la matrice filtrata
+    printf("Matrice filtrata:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++)
+            printf("%c", matrix[i][j] == car ? car : ' ');
+        printf("\n");
+    }
+
+    risultato res = {car, max};
+    return res;
 }
 
-int main(){
+int main() {
     char matrix[3][3] = {
         {'a', 'b', 'a'},
         {'c', 'a', 'd'},
         {'e', 'f', 'a'}
     };
-    char carattereTrovato;
-    int frequenza;
-    sottoprogramma(&matrix[0][0], 3, &carattereTrovato, &frequenza);
-    printf("\ncarattere più presente è: %c, trovato %d volte\n", carattereTrovato, frequenza);
-    
+    risultato r = sottoprogramma(3, matrix);
+    printf("Carattere più presente: %c, trovato %d volte\n", r.carattere, r.frequenza);
+    return 0;
 }
