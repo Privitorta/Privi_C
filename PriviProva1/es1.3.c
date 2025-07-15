@@ -1,9 +1,9 @@
 /*------------------------------------------------------------------------------------
 ES 1.3
-Riceve nome file di testo, trasmette numero di parole, frasi (contando che una
-frase termina con un punto), numero di paragrafi e numero di caratteri. Si 
-assume che un paragrafo non superi i 300 caratteri e che due parole possano
-essere separate da +1 spazi, ma non possono esserci due punti adiacenti.
+Scrivere un sottoprogramma che riceve nome file di testo, trasmette numero di parole, 
+frasi (contando che una frase termina con un punto), numero di paragrafi e numero di 
+caratteri. Si  assume che un paragrafo non superi i 300 caratteri e che due parole 
+possano essere separate da +1 spazi, ma non possono esserci due punti adiacenti.
 Genera un main che testa la funzione.
 ------------------------------------------------------------------------------------*/
 

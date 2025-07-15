@@ -1,13 +1,12 @@
 /*------------------------------------------------------------------------------------
 ES 1.2
 Ricevo in ingresso un array bidimensionale quadrato per gestire i caratteri 
-(e qualsiasi altro parametro ritenuto necessario). 
-Si individui il carattere "car" che si ripete più volte (si ipotizzi che sia 
-sempre unico)  e visualizzi il contenuto dell'array, mostrando uno spazio invece 
-dei caratteri diversi da "car". 
-Il sottoprogramma trasmette poi il carattere individuato e il numero di volte che compare.
-La matrice va stampata, ma non restituita dalla funzione, e non va nemmeno modificata.
-Genera un main che testa la funzione.
+(e qualsiasi altro parametro ritenuto necessario). Si individui il carattere "car" 
+che si ripete più volte (si ipotizzi che sia sempre unico)  e visualizzi il contenuto 
+dell'array, mostrando uno spazio invece dei caratteri diversi da "car". 
+Il sottoprogramma trasmette poi il carattere individuato e il numero di volte che 
+compare. La matrice va stampata, ma non restituita dalla funzione, e non va nemmeno 
+modificata. Genera un main che testa la funzione.
 ------------------------------------------------------------------------------------ */
 
 #include <stdio.h>
@@ -17,7 +16,7 @@ typedef struct {
     int frequenza;
 } risultato;
 
-risultato sottoprogramma(int n, char matrix[n][n]) {
+risultato Sottoprogramma(int n, char matrix[n][n]) {
     int ascii[256] = {0};
     // conta le occorrenze
     for (int i = 0; i < n; i++)
@@ -41,7 +40,6 @@ risultato sottoprogramma(int n, char matrix[n][n]) {
             printf("%c", matrix[i][j] == car ? car : ' ');
         printf("\n");
     }
-
     risultato res = {car, max};
     return res;
 }
@@ -52,7 +50,7 @@ int main() {
         {'c', 'a', 'd'},
         {'e', 'f', 'a'}
     };
-    risultato r = sottoprogramma(3, matrix);
-    printf("Carattere più presente: %c, trovato %d volte\n", r.carattere, r.frequenza);
+    risultato r = Sottoprogramma(3, matrix);
+    printf("Carattere piu presente: %c, trovato %d volte\n", r.carattere, r.frequenza);
     return 0;
 }

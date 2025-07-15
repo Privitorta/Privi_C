@@ -37,7 +37,7 @@ DivisoriList* Divisori(int n){
 int main(){
     int n = 8;
     DivisoriList* lista = Divisori(n);
-    // Stampa dei divisori (solo per test, richiesta dal main)
+    // stampa dei divisori (solo per test, richiesta dal main)
     for(DivisoriList* curr = lista; curr; curr = curr->next)
         printf("%d\n", curr->divisore);
     return 0;
