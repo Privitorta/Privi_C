@@ -7,7 +7,7 @@
 
 int main() {
     char parola0[21], parola1[21];
-    printf("scrivi una parola (max 20 caratteri):\n> ");
+    printf("Scrivi una parola (max 20 caratteri):\n> ");
     fgets(parola0, sizeof(parola0), stdin);
     parola0[strcspn(parola0, "\n")] = '\0'; // rimuove il newline
 
@@ -18,14 +18,14 @@ int main() {
     int scelta;
     while(69) {
         printf("\n**********\nMENU\n");
-        printf("1. primo e ultimo carattere\n");
-        printf("2. lunghezza parola\n");
-        printf("3. conta vocali\n");
-        printf("4. cerca un carattere\n");
-        printf("5. unisci due parole\n");
-        printf("6. inverti parola\n");
-        printf("7. verifica palindromo\n");
-        printf("8. esci\n");
+        printf("1. Primo e ultimo carattere\n");
+        printf("2. Lunghezza parola\n");
+        printf("3. Conta vocali\n");
+        printf("4. Cerca un carattere\n");
+        printf("5. Unisci due parole\n");
+        printf("6. Inverti parola\n");
+        printf("7. Verifica palindromo\n");
+        printf("8. Esci\n");
         printf("> ");
         scanf("%d", &scelta);
         getchar();  // per consumare il newline rimasto nel buffer
@@ -33,14 +33,14 @@ int main() {
         switch(scelta) {
             case 1:
                 // primo e ultimo carattere
-                printf("primo carattere: '%c'\n", parola0[0]);
-                printf("ultimo carattere: '%c'\n", parola0[strlen(parola0) - 2]);
+                printf("Primo carattere: '%c'\n", parola0[0]);
+                printf("Ultimo carattere: '%c'\n", parola0[strlen(parola0) - 2]);
             break;
 
             case 2:
                 // lunghezza
                 int len = strlen(parola0) - 1;
-                printf("lunghezza della parola: %d caratteri\n", len);
+                printf("Lunghezza della parola: %d caratteri\n", len);
             break;
 
             case 3:
@@ -51,14 +51,14 @@ int main() {
                     vocali++;
                 }
             }
-            printf("vocali presenti: %d\n", vocali);
+            printf("Vocali presenti: %d\n", vocali);
             break;
 
             case 4:
                 // ricerca specifica di un carattere
-                char carattere[2];
+                char carattere[2]; // un carattere + terminatore
                 int contatore = 0;
-                printf("cerca un carattere:\n> ");
+                printf("Cerca un carattere:\n> ");
                 fgets(carattere, sizeof(carattere), stdin);
                 for(int i=0; i<len; i++) {
                     if(parola0[i] == carattere[0]) {
@@ -66,15 +66,15 @@ int main() {
                     }
                 }
                 if (contatore == 1) {
-                    printf("il carattere appare %d volta\n", contatore);
+                    printf("Il carattere appare %d volta\n", contatore);
                 } else {
-                    printf("il carattere appare %d volte\n", contatore);
+                    printf("Il carattere appare %d volte\n", contatore);
                 }
             break;
 
             case 5:
                 // concatena la parola ad un'altra
-                printf("scrivi la seconda parola:\n> ");
+                printf("Scrivi la seconda parola:\n> ");
                 fgets(parola1, sizeof(parola1), stdin);
                 parola1[strcspn(parola1, "\n")] = '\0'; // rimuove il newline
 
@@ -83,20 +83,20 @@ int main() {
                 fraseUnita[sizeof(fraseUnita)-1] = '\0';  // sicurezza
                 // strcat(fraseUnita, " ");
                 strcat(fraseUnita, parola1);
-                printf("frase unita: %s\n", fraseUnita);
+                printf("Frase unita: %s\n", fraseUnita);
             break;
 
             case 6:
                 // inverti parola
                 inverti(invertita, parola0);
-                printf("parola invertita: %s\n", invertita);
+                printf("Parola invertita: %s\n", invertita);
             break;
 
             case 7:
                 // controlla se è palindroma
                 inverti(invertita, parola0);
                 if(strcmp(invertita, parola0) == 0) {
-                    printf("%s: palindroma\n", parola0);
+                    printf("%s: Palindroma\n", parola0);
                 } else {
                     printf("%s: NON palindroma\n", parola0);
                 }
@@ -107,7 +107,7 @@ int main() {
             break;
 
             default:
-                printf("scelta non valida\n");
+                printf("Scelta non valida\n");
         }
     }
 

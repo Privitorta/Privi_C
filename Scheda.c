@@ -143,19 +143,18 @@ printf("hai scritto: %c\n", d);
 
 // **********************************************************************
 // 2) Stringhe
-// array di char terminati da '\0'
 
-char nome[11];          // può contenere massimo 10 caratteri + '\0'
-char nome1[] = "emma";  // il compilatore mette da solo '\0'
-char nome2[20] = "peppino"; // spazio extra rimane vuoto ma allocato
+char nome[11];                // può contenere massimo 10 caratteri + '\0'
+char nome1[] = "emma";        // il compilatore mette da solo '\0'
+char nome2[20] = "peppino";   // spazio extra rimane vuoto ma allocato
 
 #define MAX_LUNGHEZZA 50
 char testo[MAX_LUNGHEZZA];
 
 // copiare una stringa
 char a[11], b[11];
-strcpy(a, "sdrogo");
-strcpy(b,a); // b = "sdrogo"
+strcpy(a, "sdrogo");  // a = "sdrogo"
+strcpy(b, a);         // b = a = "sdrogo"
 
 // copiare max n caratteri di una stringa (evita buffer overflow)
 strncpy(nome, "emma", sizeof(nome)-1); 
@@ -236,7 +235,6 @@ if(strcmp(invertita, parola) == 0) {
     printf("%s non è palindroma\n", parola);
 }
 
-
 // converti da minuscola a maiuscola
 char stringa[] = "emma";
 for(int i=0; i < strlen(stringa); i++) {
@@ -252,14 +250,14 @@ for(int i=0; i < strlen(stringa); i++) {
 
 // **********************************************************************
 // 3) Array
-// tieni a mente che si parte sempre da 0 nella conta degli elementi
 
 // 3.1) Monodimensionali
 int v[5] = {1,2,3,4,5};
 printf("%d", v[2]); // stampa 3 (elemento in posizione 2)
+
 // scorrere elementi di un array monodimensionale
 for(int i=0; i<5; i++){
-    printf("%d\n", v[i]);
+    printf("%d ", v[i]);
 }
 // sommare elementi di un array monodimensionale
 int somma = 0;
@@ -269,22 +267,41 @@ for(int i=0; i<5; i++){
 printf("%d", somma); // 15
 
 // 3.2) Bidimensionali
-int mat[3][3] = { {1,2,3}, {4,5,6}, {7,8,9} };
+int mat[3][3] = { {1,2,3}, {4,5,6}, {7,8,9} }; // matrice 3x3
 printf("%d", mat[1][2]); // stampa 6 (elemento 1,2)
+
+#define N 3
+int mat[N][N];
+
 // scorrere elementi di un array bidimensionale
 for(int i=0; i<3; i++){
     for(int j=0; j<3; j++){
         printf("%d\n", mat[i][j]);
     }
 }
+// stampare un array bidimensionale
+for(int i=0; i<3; i++){
+    for(int j=0; j<3; j++){
+        printf("%d ", mat[i][j]);
+    }
+    printf("\n");
+}
+// ricavare da input gli elementi di un array bidimensionale
+for(int i=0; i<3; i++){
+    for(int j=0; j<3; j++){
+        printf("Elemento [%d][%d]: ", i, j);
+        scanf("%d", &mat[i][j]);
+    }
+}
 
 // 3.3) Multidimensionali
-int arr[2][3][4];           // 2 blocchi 3 righe 4 colonne
+int arr[3][3][3];           // 3 blocchi 3 righe 3 colonne, 3x3x3 (cubo di Rubik)
 printf("%d", arr[1][2][3]); // elemento blocco 1, riga 2, colonna 3
+
 // scorrere elementi di un array multidimensionale
-for(int i=0; i<2; i++){
+for(int i=0; i<3; i++){
     for(int j=0; j<3; j++){
-        for(int k=0; k<4; k++){
+        for(int k=0; k<3; k++){
             printf("%d\n", arr[i][j][k]);
         }
     }
