@@ -14,6 +14,8 @@ typedef struct DivisoriList{
     struct DivisoriList* next;
 } DivisoriList;
 
+// ho scelto una lista collegata per gestire un numero variabile di divisori senza spreco di memoria
+
 DivisoriList* Divisori(int n){
     if(n<1) return NULL;
     DivisoriList *head = NULL, *tail = NULL;
@@ -35,10 +37,10 @@ DivisoriList* Divisori(int n){
 }
 
 int main(){
-    int n = 8;
+    int n = 657;
     DivisoriList* lista = Divisori(n);
     // stampa dei divisori (solo per test, richiesta dal main)
     for(DivisoriList* curr = lista; curr; curr = curr->next)
-        printf("%d\n", curr->divisore);
+        printf("%d  ", curr->divisore);
     return 0;
 }

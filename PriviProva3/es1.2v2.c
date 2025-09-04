@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------------ 
-ES 1.2
+ES 1.2 v2
 Scrivi un programma che definisce una matrice NxN che contiene numeri interi e crea 
 una nuova matrice il cui valore di ciascun elemento corrisponde al massimo dei valori 
 che lo circondano nella matrice acquisita, escludendo quell'elemento.
