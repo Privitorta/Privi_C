@@ -16,15 +16,16 @@ void stampaCarattereFrequente(int n, char matrix[n][n]) {
     // conta le occorrenze
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
-            ascii[(unsigned char)matrix[i][j]]++;
+            ascii[(unsigned char)matrix[i][j]]++; // per ogni elemento della matrice incremento il contatore corrispondente
+        // "unsigned" -> i caratteri vanno da 0 a 255, "char" -> stiamo usando il carattere come indice dell'array
 
-    // Trova il carattere più frequente
-    int max = 0;
-    char car = 0;
-    for (int i = 0; i < 256; i++) {
-        if (ascii[i] > max) {
-            max = ascii[i];
-            car = (char)i;
+    // trova il carattere più frequente
+    int max = 0; // inizializzo a 0 il massimo
+    char car = 0; // inizializzo a 0, che non è un carattere stampabile
+    for (int i = 0; i < 256; i++) { // scorro tutti i caratteri ASCII
+        if (ascii[i] > max) { // se il contatore è maggiore del massimo
+            max = ascii[i]; // aggiorno il massimo
+            car = (char)i; // aggiorno il carattere più frequente
         }
     }
 
@@ -32,7 +33,7 @@ void stampaCarattereFrequente(int n, char matrix[n][n]) {
     printf("Matrice filtrata:\n");
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++)
-            printf("%c", matrix[i][j] == car ? car : ' ');
+            printf("%c ", matrix[i][j] == car ? car : ' ');
         printf("\n");
     }
     printf("Carattere piu presente: %c, trovato %d volte\n", car, max);

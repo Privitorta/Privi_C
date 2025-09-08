@@ -308,10 +308,26 @@ for(int i=0; i<3; i++){
 }
 
 // **********************************************************************
+// 4) Linked Lists
+// strutture dati dinamiche (allocazione dinamica della memoria)
+
+// ad esempio, una lista di frazioni
+typedef struct { // significa che stiamo definendo un nuovo tipo di dato, chiamato "frac_t"
+    int numeratore; // qui va il numeratore
+    int denominatore; // qui va il denominatore
+} frac_t; // qui finisce la definizione del tipo di dato "frac_t"
+
+typedef struct Nodo { // qui io definisco il tipo di dato "Nodo", che rappresenta un nodo della lista
+    frac_t frazione;  // qui va la frazione
+    struct Nodo* next; // qui va il puntatore al prossimo nodo (NULL se è l'ultimo) ovvero il "link"
+} Nodo; // qui finisce la definizione del tipo di dato "Nodo"
+
+// tutto questo serve a definire una lista di frazioni, che è una sequenza di nodi
+// ogni nodo contiene una frazione e un puntatore al prossimo nodo
 
 
 // **********************************************************************
-// 4) Contare
+// 5) Contare
 // contare, accumulare valori (tener conto delle occorrenze) che soddisfano richiesta
 
 int v[6] = {-1, 5, 0, 8, -3, 2};

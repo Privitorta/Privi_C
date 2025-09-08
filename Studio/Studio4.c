@@ -20,7 +20,6 @@ int main() {
         printf("\n");
     }
 
-
     while(69){
         int scelta;
         printf("Cosa vuoi fare?\n");

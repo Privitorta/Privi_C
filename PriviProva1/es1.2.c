@@ -37,7 +37,7 @@ risultato Sottoprogramma(int n, char matrix[n][n]) {
     printf("Matrice filtrata:\n");
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++)
-            printf("%c", matrix[i][j] == car ? car : ' ');
+            printf("%c ", matrix[i][j] == car ? car : ' ');
         printf("\n");
     }
     risultato res = {car, max};
