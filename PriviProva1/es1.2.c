@@ -17,19 +17,19 @@ typedef struct {
 } risultato;
 
 risultato Sottoprogramma(int n, char matrix[n][n]) {
-    int ascii[256] = {0};
+    int ascii[256] = {0}; // array per contare le occorrenze di ogni carattere ASCII
     // conta le occorrenze
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
-            ascii[(unsigned char)matrix[i][j]]++;
+            ascii[(unsigned char)matrix[i][j]]++; // cast a unsigned char per evitare problemi con caratteri negativi
 
     // trova il carattere più frequente
-    int max = 0;
-    char car = 0;
-    for (int i = 0; i < 256; i++) {
-        if (ascii[i] > max) {
-            max = ascii[i];
-            car = (char)i;
+    int max = 0; // numero massimo di occorrenze
+    char car = 0; // carattere più frequente
+    for (int i = 0; i < 256; i++) { // scorro tutto l'array ASCII
+        if (ascii[i] > max) { // se l'occorrenza corrente è maggiore del massimo trovato finora
+            max = ascii[i]; // aggiorno il massimo e...
+            car = (char)i; // aggiorno il carattere più frequente
         }
     }
 
@@ -37,11 +37,11 @@ risultato Sottoprogramma(int n, char matrix[n][n]) {
     printf("Matrice filtrata:\n");
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++)
-            printf("%c ", matrix[i][j] == car ? car : ' ');
+            printf("%c ", matrix[i][j] == car ? car : ' '); // sostituisco con spazio i caratteri diversi da car
         printf("\n");
     }
-    risultato res = {car, max};
-    return res;
+    risultato res = {car, max}; // creo il risultato da restituire
+    return res; // restituisco il carattere più frequente e la sua frequenza
 }
 
 int main() {
@@ -50,7 +50,7 @@ int main() {
         {'c', 'a', 'd'},
         {'e', 'f', 'a'}
     };
-    risultato r = Sottoprogramma(3, matrix);
-    printf("Carattere piu presente: %c, trovato %d volte\n", r.carattere, r.frequenza);
+    risultato r = Sottoprogramma(3, matrix); // risultato r significa che r contiene il risultato del sottoprogramma
+    printf("Carattere piu presente: %c, trovato %d volte\n", r.carattere, r.frequenza); // stampo il risultato
     return 0;
 }

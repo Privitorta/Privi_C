@@ -34,6 +34,7 @@ DivisoriArray Divisori(int n) {
 
 int main() {
     int n = 8; // numero input positivo di esempio, di cui trovare i divisori
+    printf("Divisori di %d:\n", n);
     DivisoriArray lista = Divisori(n); // chiamo la funzione
     // stampa dei divisori (solo per test, richiesta dal main)
     for (int i = 0; i < lista.count; i++) 

@@ -11,8 +11,9 @@ inferiore alla soglia ricevuta. Genera un main che testa la funzione.
 #include <stdlib.h>
 
 // definizione del tipo frazione
-typedef struct {
-    int numeratore, denominatore;
+typedef struct frac_t {
+    int numeratore;
+    int denominatore;
 } frac_t;
 
 // nodo della lista

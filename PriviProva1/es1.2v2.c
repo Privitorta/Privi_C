@@ -11,6 +11,8 @@ modificata. Genera un main che testa la funzione.
 
 #include <stdio.h>
 
+// versione senza struct
+
 void stampaCarattereFrequente(int n, char matrix[n][n]) {
     int ascii[256] = {0};
     // conta le occorrenze
