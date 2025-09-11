@@ -15,15 +15,18 @@ Uscita:
 #include <stdio.h>
 #include <stdlib.h>
 
+// definiamo la struttura che contiene un numero e il puntatore al prossimo nodo
 typedef struct valore {
     int numero;
     struct valore *indirizzoProssimoNumero;
 } valore;
 
+// struttura che contiene il puntatore al primo nodo, la nostra lista
 typedef struct lista {
     valore *indirizzoPrimoNumero;
 } lista;
 
+// inizializza un nodo nella lista
 valore* initNodo(int numero) {
     valore* nuovo = (valore*)malloc(sizeof(valore));
     if (nuovo == NULL) {
@@ -64,8 +67,8 @@ valore* unisciFileLista(const char* file1, const char* file2) {
     valore* testa = NULL;
     int n;
     // leggi dal primo file
-    while (fscanf(f1, "%1d", &n) == 1) {
-        testa = mettiValoreOrdinato(testa, n);
+    while (fscanf(f1, "%1d", &n) == 1) { // con %1d leggo un carattere alla volta e lo converto in intero
+        testa = mettiValoreOrdinato(testa, n); // inserisco il numero letto in modo ordinato
     }
     // leggi dal secondo file
     while (fscanf(f2, "%1d", &n) == 1) {
@@ -76,7 +79,7 @@ valore* unisciFileLista(const char* file1, const char* file2) {
     return testa;
 }
 
-// funzione di utilità per stampare la lista
+// funzione per stampare la lista
 void stampaLista(valore* testa) {
     while (testa != NULL) {
         printf("%d", testa->numero);
@@ -96,7 +99,7 @@ void liberaLista(valore* testa) {
 }
 
 int main() {
-    valore* lista = unisciFileLista("file1.txt", "file2.txt");
+    valore* lista = unisciFileLista("file1.txt", "file2.txt"); // qui uso i nomi dei file di esempio come parametri
     if (lista) {
         printf("Lista unita ordinata: ");
         stampaLista(lista);
