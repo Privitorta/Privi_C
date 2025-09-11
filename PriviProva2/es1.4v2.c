@@ -25,7 +25,6 @@ binaria corrispondente, ad esempio binario(7, ...) -> 110
 ------------------------------------------------------------------------------------*/
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 

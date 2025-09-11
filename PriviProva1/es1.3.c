@@ -40,7 +40,7 @@ void analizzaFile(const char* nomeFile, int* caratteri, int* parole, int* frasi,
 int main() {
     char nomeFile[100];
     int caratteri, parole, frasi, paragrafi;
-    printf("Inserisci nome file: ");
+    printf("Inserisci nome file (con .txt): ");
     fgets(nomeFile, sizeof(nomeFile), stdin);
     nomeFile[strcspn(nomeFile, "\n")] = '\0';
     analizzaFile(nomeFile, &caratteri, &parole, &frasi, &paragrafi);

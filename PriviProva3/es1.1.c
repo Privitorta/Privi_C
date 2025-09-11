@@ -13,7 +13,6 @@ file3.txt: 12334556789
 ------------------------------------------------------------------------------------*/
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <ctype.h>
 
 // int unisciFile prende come parametri i due file di input e un file di output
