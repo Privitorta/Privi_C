@@ -1,111 +1,121 @@
 /*------------------------------------------------------------------------------------
-ES 1.2  
-Scrivere un sottoprogramma unisciFileLista che riceve in ingresso nome di due file 
-contenenti numeri interi ordinati in ordine crescente. Il sottoprogramma dovrà inserire 
-i valori in una lista dinamica (devono rimanere ordinati) 
-e restituisce la testa della lista. Genera un main che testa la funzione.
+ES 1.2
+Scrivere un programma in C che definisce una matrice quadrata di dimensione N contenente 
+valori char indicanti una lettera a-z o A-Z. Il programma crea una nuova matrice 
+in cui il valore di ciascun elemento corrisponde alla lettera che viene prima nell'alfabeto 
+tra quelle che circondano tale elemento nella matrice acquisita escludendo quell'elemento. 
+Non si fanno distensioni tra minuscole e maiuscole. Si conta solo l'ordine alfabetico. 
+Al termine, il programma visualizza le due matrici in sequenza.
 
 ESEMPIO
-file1.txt: 138943
-file2.txt: 2355671
-Uscita: 
-1123334556789
+Ingresso:
+a b C d
+e F G h
+i J k L
+M N o P
+Uscita:
+b a b C
+a a b C
+e e F G
+i i J k
 ------------------------------------------------------------------------------------*/
+
+// non mi viene e mi ha rotto il cazzo quindi basta
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
-// definiamo la struttura che contiene un numero e il puntatore al prossimo nodo
-typedef struct valore {
-    int numero;
-    struct valore *indirizzoProssimoNumero;
-} valore;
-
-// struttura che contiene il puntatore al primo nodo, la nostra lista
-typedef struct lista {
-    valore *indirizzoPrimoNumero;
-} lista;
-
-// inizializza un nodo nella lista
-valore* initNodo(int numero) {
-    valore* nuovo = (valore*)malloc(sizeof(valore));
-    if (nuovo == NULL) {
-        printf("Errore di allocazione della memoria\n");
-        exit(1);
+char** generaMatrice(int N) {
+    char** matrice = malloc(N* sizeof(char*));
+    for(int i=0; i<N; i++) {
+         matrice[i] = malloc(N* sizeof(char));
+         if(!matrice[i]) {
+              printf("Errore di allocazione della memoria\n");
+              for(int j=0; j<i; j++) {
+                free(matrice[j]);
+              } free(matrice);
+              return NULL;
+         }
+    } 
+    printf("Popola la matrice %dx%d\n", N, N);
+    for(int i=0; i<N; i++){
+         for(int j=0; j<N; j++){
+              printf("Elemento [%d][%d]: ", i, j);
+              scanf(" %c", &matrice[i][j]);
+              while(!isalpha(matrice[i][j])){
+                printf("Solo lettere concesse (a-z/A-Z):\n> ");
+                scanf(" %c", &matrice[i][j]);
+              }
+         }
     }
-    nuovo->numero = numero;
-    nuovo->indirizzoProssimoNumero = NULL;
-    return nuovo;
+    return matrice;
 }
 
-// inserisce un numero in modo ordinato nella lista
-valore* mettiValoreOrdinato(valore* testa, int numero) {
-    valore* nuovo = initNodo(numero);
-    if (testa == NULL || numero < testa->numero) {
-        nuovo->indirizzoProssimoNumero = testa;
-        return nuovo;
+char** generaMatrice2(char** matrice, int N) {
+    char** matrice2 = malloc(N * sizeof(char*));
+    for (int i=0; i<N; i++) {
+        matrice2[i] = malloc(N * sizeof(char));
+        if (!matrice2[i]) {
+            printf("Errore di allocazione della memoria\n");
+            for (int j=0; j<i; j++) {
+                free(matrice2[j]);
+            }
+            free(matrice2);
+            return NULL;
+        }
     }
-    valore* curr = testa;
-    while (curr->indirizzoProssimoNumero != NULL && curr->indirizzoProssimoNumero->numero < numero) {
-        curr = curr->indirizzoProssimoNumero;
+    char minimo, array[4];
+    for (int i=0; i<N; i++) {
+        for (int j=0; j<N; j++) {
+            int counter = 0;
+            if (i>0) { array[counter++] = matrice[i-1][j]; } // sopra
+            if (i<N-1) { array[counter++] = matrice[i+1][j]; } // sotto
+            if (j<N-1) { array[counter++] = matrice[i][j+1]; } // destra
+            if (j>0) { array[counter++] = matrice[i][j-1]; } // sinistra
+            minimo = 'z' + 1;
+            for (int m=0; m < counter; m++) {
+                char corrente = array[m]; 
+                char corrente_lower = tolower(corrente);
+                char minimo_lower = tolower(minimo);
+                if (corrente_lower < minimo_lower || (corrente_lower == minimo_lower && corrente < minimo)) {
+                    minimo = corrente;
+                }
+            }
+            matrice2[i][j] = minimo;
+        }
     }
-    nuovo->indirizzoProssimoNumero = curr->indirizzoProssimoNumero;
-    curr->indirizzoProssimoNumero = nuovo;
-    return testa;
+    return matrice2;
 }
 
-// sottoprogramma richiesto
-valore* unisciFileLista(const char* file1, const char* file2) {
-    FILE *f1 = fopen(file1, "r");
-    FILE *f2 = fopen(file2, "r");
-    if (!f1 || !f2) {
-        printf("Errore apertura file.\n");
-        if (f1) fclose(f1);
-        if (f2) fclose(f2);
-        return NULL;
+void stampaMatrici(char** matrice, char** matrice2, int N) {
+    printf("Le matrici:\n");
+    for (int i=0; i < N; i++) {
+        for (int j=0; j < N; j++) {
+            printf("%c ", matrice[i][j]);
+        }
+        printf("    ");
+        for (int j=0; j < N; j++) {
+            printf("%c ", matrice2[i][j]);
+        }
+        printf("\n");
     }
-    valore* testa = NULL;
-    int n;
-    // leggi dal primo file
-    while (fscanf(f1, "%1d", &n) == 1) { // con %1d leggo un carattere alla volta e lo converto in intero
-        testa = mettiValoreOrdinato(testa, n); // inserisco il numero letto in modo ordinato
-    }
-    // leggi dal secondo file
-    while (fscanf(f2, "%1d", &n) == 1) {
-        testa = mettiValoreOrdinato(testa, n);
-    }
-    fclose(f1);
-    fclose(f2);
-    return testa;
 }
 
-// funzione per stampare la lista
-void stampaLista(valore* testa) {
-    while (testa != NULL) {
-        printf("%d", testa->numero);
-        testa = testa->indirizzoProssimoNumero;
-    }
-    printf("\n");
-}
-
-// funzione per liberare la memoria della lista
-void liberaLista(valore* testa) {
-    valore* temp;
-    while (testa != NULL) {
-        temp = testa;
-        testa = testa->indirizzoProssimoNumero;
-        free(temp);
-    }
-}
 
 int main() {
-    valore* lista = unisciFileLista("file1.txt", "file2.txt"); // qui uso i nomi dei file di esempio come parametri
-    if (lista) {
-        printf("Lista unita ordinata: ");
-        stampaLista(lista);
-        liberaLista(lista);
-    } else {
-        printf("Errore nella creazione della lista\n");
+    int N; printf("Dimensione matrice:\n> "); scanf("%d", &N);
+    char** matrice = generaMatrice(N);
+    if (!matrice) return 1;
+    char** matrice2 = generaMatrice2(matrice, N);
+    if (!matrice2) {
+        for (int i=0; i<N; i++) free(matrice[i]);
+        free(matrice);
+        return 1;
     }
+    stampaMatrici(matrice, matrice2, N);
+    for (int i=0; i<N; i++) { free(matrice[i]); free(matrice2[i]); }
+    free(matrice); free(matrice2);
     return 0;
 }

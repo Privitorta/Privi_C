@@ -30,7 +30,7 @@ int contaMinori(Nodo* head, frac_t soglia) { // riceve la testa della lista e un
     for (Nodo* curr = head; curr != NULL; curr = curr->next) { // itera su ogni nodo della lista
         // calcola il valore della frazione corrente
         if (curr->frazione.denominatore == 0) { // evita divisione per zero
-            printf("denominatore zero in una frazione, salto alla prossima\n");
+            printf("Denominatore zero in una frazione, salto alla prossima\n");
             continue;
         }
         double valore = (double)curr->frazione.numeratore / curr->frazione.denominatore;

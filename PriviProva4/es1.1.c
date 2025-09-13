@@ -1,110 +1,111 @@
 /*------------------------------------------------------------------------------------
-ES 1.1
-Data in ingresso una stringa di cui non è nota a priori la dimensione, creare 
-dinamicamente altre due liste inserendo nella prima tutti i caratteri alfabetici 
-e nella seconda tutti i caratteri non alfabetici come numeri, 
-spazi, caratteri speciali ecc. ecc.
-Genera un main che testa la funzione.
+ES 1.1  
+Scrivere un sottoprogramma unisciFileLista che riceve in ingresso nome di due file 
+contenenti numeri interi ordinati in ordine crescente. Il sottoprogramma dovrà inserire 
+i valori in una lista dinamica (devono rimanere ordinati) 
+e restituisce la testa della lista. Genera un main che testa la funzione.
 
 ESEMPIO
-Ingresso: 
-"Ciao 123!"
-Uscita:
-Lista 1: C i a o
-Lista 2: 1 2 3 !
+file1.txt: 138943
+file2.txt: 2355671
+Uscita: 
+1123334556789
 ------------------------------------------------------------------------------------*/
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
-// definiamo la struttura che contiene un carattere e il puntatore al prossimo nodo
-typedef struct carattere {
-    char c; // il carattere
-    struct carattere *indirizzoProssimoCarattere; // puntatore all'indirizzo in cui si trova il prossimo carattere
-    // punta all'INDIRIZZO, non propriamente al carattere
-} carattere; // ho definito il nodo della lista
+// definiamo la struttura che contiene un numero e il puntatore al prossimo nodo
+typedef struct valore {
+    int numero;
+    struct valore *indirizzoProssimoNumero;
+} valore;
 
-// ora definisco la struttura che contiene il puntatore al primo nodo, la nostra lista
-typedef struct lista { // la lista contiene solo il puntatore al primo nodo
-    carattere *indirizzoPrimoCarattere; // si scrive così perchè punta all'indirizzo del primissimo carattere
+// struttura che contiene il puntatore al primo nodo, la nostra lista
+typedef struct lista {
+    valore *indirizzoPrimoNumero;
 } lista;
 
-// per inizializzare un nodo nella lista, il procedimento è quasi sempre lo stesso
-carattere* creaNodo(char c) { // carattere c è il carattere che voglio inserire nel nodo, dunque lo passo come parametro
-    carattere* nuovo = (carattere*)malloc(sizeof(carattere)); // alloco memoria per il nuovo nodo 
-    // nuovo punta all'indirizzo di memoria dove si trova l'oggetto di tipo carattere
-    if (nuovo == NULL) { // se "nuovo", ovvero il puntatore, è NULL, vuol dire che non c'è abbastanza memoria
+// inizializza un nodo nella lista
+valore* inizializzaNodo(int numero) {
+    valore* nuovo = (valore*)malloc(sizeof(valore));
+    if (nuovo == NULL) {
         printf("Errore di allocazione della memoria\n");
         exit(1);
     }
-    nuovo->c = c; // qui sto mettendo in nuovo il carattere che mi è stato passato come parametro
-    nuovo->indirizzoProssimoCarattere = NULL; // il prossimo indirizzo è NULL perchè per ora è l'ultimo nodo
-    return nuovo; // ritorno il puntatore al nuovo nodo
+    nuovo->numero = numero;
+    nuovo->indirizzoProssimoNumero = NULL;
+    return nuovo;
 }
 
-// funzione che inserisce un carattere in fondo alla lista
-carattere* mettiInFondo(carattere* testa, char c) { // ci serve per inserire in fondo alla lista nuovi caratteri
-    carattere* nuovo = creaNodo(c); // inizializzo il nuovo nodo con il carattere c con la funzione per creare nodi
-    if (testa == NULL) { // se la lista è vuota, il nuovo nodo diventa la testa
-        return nuovo; // ritorno il puntatore al nuovo nodo che ora è la testa
+// inserisce un numero in modo ordinato nella lista
+valore* mettiValoreOrdinato(valore* testa, int numero) {
+    valore* nuovo = inizializzaNodo(numero);
+    if (testa == NULL || numero < testa->numero) {
+        nuovo->indirizzoProssimoNumero = testa;
+        return nuovo;
     }
-    carattere* curr = testa; // curr è un puntatore che scorrerà la lista, parte dalla testa
-    while (curr->indirizzoProssimoCarattere != NULL) { // scorro la lista fino a trovare l'ultimo nodo
-        curr = curr->indirizzoProssimoCarattere; // mi sposto al prossimo nodo
+    valore* corrente = testa;
+    while (corrente->indirizzoProssimoNumero != NULL && corrente->indirizzoProssimoNumero->numero < numero) {
+        corrente = corrente->indirizzoProssimoNumero;
     }
-    curr->indirizzoProssimoCarattere = nuovo; // il prossimo nodo dell'ultimo nodo ora punta al nuovo nodo
-    return testa; // ritorno la testa della lista
+    nuovo->indirizzoProssimoNumero = corrente->indirizzoProssimoNumero;
+    corrente->indirizzoProssimoNumero = nuovo;
+    return testa;
 }
 
 // sottoprogramma richiesto
-void separaStringa(const char* str, carattere** listaAlfabetici, carattere** listaNonAlfabetici) {
-    // separaStringa prende in input una stringa e due liste (puntatori a puntatori)
-    for (int i=0; i < strlen(str); i++) {
-        if ((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z')) {
-            // se il carattere è alfabetico, lo metto nella lista degli alfabetici
-            *listaAlfabetici = mettiInFondo(*listaAlfabetici, str[i]);
-        } else {
-            // altrimenti lo metto nella lista dei non alfabetici
-            *listaNonAlfabetici = mettiInFondo(*listaNonAlfabetici, str[i]);
-        }
+valore* unisciFileLista(const char* file1, const char* file2) {
+    FILE *f1 = fopen(file1, "r");
+    FILE *f2 = fopen(file2, "r");
+    if (!f1 || !f2) {
+        printf("Errore apertura file.\n");
+        if (f1) fclose(f1);
+        if (f2) fclose(f2);
+        return NULL;
     }
+    valore* testa = NULL;
+    int n;
+    // leggi dal primo file
+    while (fscanf(f1, "%1d", &n) == 1) { // con %1d leggo un carattere alla volta e lo converto in intero
+        testa = mettiValoreOrdinato(testa, n); // inserisco il numero letto in modo ordinato
+    }
+    // leggi dal secondo file
+    while (fscanf(f2, "%1d", &n) == 1) {
+        testa = mettiValoreOrdinato(testa, n);
+    }
+    fclose(f1);
+    fclose(f2);
+    return testa;
 }
 
 // funzione per stampare la lista
-void stampaLista(carattere* testa) { // prende in input la testa della lista
-    carattere* curr = testa; // curr è un puntatore che scorrerà la lista
-    while (curr != NULL) { // scorro la lista fino a che curr non è NULL
-        printf("%c ", curr->c); // stampo il carattere del nodo corrente
-        curr = curr->indirizzoProssimoCarattere; // mi sposto al prossimo nodo
+void stampaLista(valore* testa) {
+    while (testa != NULL) {
+        printf("%d ", testa->numero);
+        testa = testa->indirizzoProssimoNumero;
     }
     printf("\n");
 }
 
 // funzione per liberare la memoria della lista
-void liberaLista(carattere* testa) { // prende in input la testa della lista
-    carattere* temp; // variabile temporanea per tenere traccia del nodo da liberare
-    while (testa != NULL) { // scorro la lista fino a che testa non è NULL
-        temp = testa; // salvo il nodo corrente in temp
-        testa = testa->indirizzoProssimoCarattere; // mi sposto al prossimo nodo
-        free(temp); // libero la memoria del nodo salvato in temp
-    } // il while permette di liberare tutta la lista nodo per nodo
+void liberaLista(valore* testa) {
+    valore* temp;
+    while (testa != NULL) {
+        temp = testa;
+        testa = testa->indirizzoProssimoNumero;
+        free(temp);
+    }
 }
 
 int main() {
-    const char* input = "Ciao 123!";
-    carattere* listaAlfabetici = NULL;
-    carattere* listaNonAlfabetici = NULL;
-
-    separaStringa(input, &listaAlfabetici, &listaNonAlfabetici);
-
-    printf("Lista caratteri alfabetici: ");
-    stampaLista(listaAlfabetici);
-    printf("Lista caratteri non alfabetici: ");
-    stampaLista(listaNonAlfabetici);
-
-    liberaLista(listaAlfabetici);
-    liberaLista(listaNonAlfabetici);
-
+    valore* lista = unisciFileLista("file1.txt", "file2.txt"); // qui uso i nomi dei file di esempio come parametri
+    if (lista) {
+        printf("Lista unita ordinata: ");
+        stampaLista(lista);
+        liberaLista(lista);
+    } else {
+        printf("Errore nella creazione della lista\n");
+    }
     return 0;
 }
