@@ -87,6 +87,20 @@ size_t;                                 // tipo per dimensioni
 NULL;                                   // puntatore nullo
 offsetof(tipo, campo);                  // offset campo in struct
 
+// math.h
+pow(x,y);                            // x elevato alla y
+sqrt(x);                             // radice quadrata di x
+ceil(x);                             // arrotonda x per eccesso
+floor(x);                            // arrotonda x per difetto
+fabs(x);                             // valore assoluto di x (double)
+abs(x);                              // valore assoluto di x (int)
+sin(x); cos(x); tan(x);              // funzioni trigonometriche (x in radianti)
+asin(x); acos(x); atan(x);           // funzioni trigonometriche inverse
+log(x);                              // logaritmo naturale di x
+log10(x);                            // logaritmo in base 10 di x
+exp(x);                              // e elevato alla x
+fmod(x,y);                           // resto della divisione x/y
+
 // 0.1) Formati di input/output
 %d           // intero
     %hd      // short
