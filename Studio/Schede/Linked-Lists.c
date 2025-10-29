@@ -26,7 +26,7 @@ nodo* inizializzaNodo (int valore) {
         exit(1);
     }
     nuovo -> valore = valore; 
-    // facendo nuovo->valore, sto mettendo in "nuovo" il valore che mi è stato passato come parametro a inizio funzione
+    // facendo nuovo -> valore, sto mettendo in "nuovo" il valore che mi è stato passato come parametro a inizio funzione
     nuovo -> indirizzoProssimoNodo = NULL;
     // facendo invece nuovo->indirizzoProssimoNodo = NULL, sto dicendo che il prossimo indirizzo è NULL perchè per ora è l'ultimo nodo
     // questa cosa si fa sempre quando si crea un nuovo nodo, perchè non si sa se ci saranno altri nodi dopo di esso
@@ -40,10 +40,10 @@ nodo* inserisciNodo(nodo* testa, int valore) {
         return nuovo; // ritorno il puntatore al nuovo nodo che ora è la testa
     }
     nodo* corrente = testa; // "corrente" è un puntatore che scorre la nostra lista partendo dalla testa
-    while (corrente->indirizzoProssimoNodo != NULL) { // scorro la lista fino a trovare l'ultimo nodo
-        corrente = corrente->indirizzoProssimoNodo; // una volta trovato, mi sposto al prossimo nodo
+    while (corrente -> indirizzoProssimoNodo != NULL) { // scorro la lista fino a trovare l'ultimo nodo
+        corrente = corrente -> indirizzoProssimoNodo; // una volta trovato, mi sposto al prossimo nodo
     }
-    corrente->indirizzoProssimoNodo = nuovo; // il prossimo nodo dell'ultimo è ora il nuovo nodo!
+    corrente -> indirizzoProssimoNodo = nuovo; // il prossimo nodo dell'ultimo è ora il nuovo nodo!
     return testa; // ritorno la testa della lista
 }
 
