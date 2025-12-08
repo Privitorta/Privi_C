@@ -40,6 +40,7 @@ char* cifra(const char* stringa, int k) {
         char c = stringa[i]; // prendo il carattere corrente
         if (c >= 'A' && c <= 'Z') { // se è una lettera maiuscola
             cifrato[i] = 'A' + (c - 'A' + k) % 26; // cifro mantenendo il ciclo nell'alfabeto
+            // 'A' + (c - 'A') mi dà la posizione della lettera nell'alfabeto (0-25), aggiungo k e uso modulo 26 per ciclare
         } else if (c >= 'a' && c <= 'z') { // se è una lettera minuscola
             cifrato[i] = 'a' + (c - 'a' + k) % 26; // stessa cosa
         } else {
