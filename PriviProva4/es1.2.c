@@ -20,8 +20,6 @@ e e F G
 i i J k
 ------------------------------------------------------------------------------------*/
 
-// non mi viene e mi ha rotto il cazzo quindi basta
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -66,21 +64,26 @@ char** generaMatrice2(char** matrice, int N) {
             return NULL;
         }
     }
-    char minimo, array[4];
+    
     for (int i=0; i<N; i++) {
         for (int j=0; j<N; j++) {
-            int counter = 0;
-            if (i>0) { array[counter++] = matrice[i-1][j]; } // sopra
-            if (i<N-1) { array[counter++] = matrice[i+1][j]; } // sotto
-            if (j<N-1) { array[counter++] = matrice[i][j+1]; } // destra
-            if (j>0) { array[counter++] = matrice[i][j-1]; } // sinistra
-            minimo = 'z' + 1;
-            for (int m=0; m < counter; m++) {
-                char corrente = array[m]; 
-                char corrente_lower = tolower(corrente);
-                char minimo_lower = tolower(minimo);
-                if (corrente_lower < minimo_lower || (corrente_lower == minimo_lower && corrente < minimo)) {
-                    minimo = corrente;
+            char minimo = '\0'; 
+            int primoVicino = 1;
+
+            for (int di = -1; di <= 1; di++) {
+                for (int dj = -1; dj <= 1; dj++) {
+                    if (di == 0 && dj == 0) continue; // salta la cella stessa
+                    int ni = i + di; // nuova riga
+                    int nj = j + dj; // nuova colonna
+                    // verifica che il vicino sia dentro i bordi
+                    if (ni >= 0 && ni < N && nj >= 0 && nj < N) {
+                        char corrente = matrice[ni][nj];               
+                        // confronto ignorando maiuscole/minuscole
+                        if (primoVicino || tolower(corrente) < tolower(minimo)) {
+                            minimo = corrente;
+                            primoVicino = 0;
+                        }
+                    }
                 }
             }
             matrice2[i][j] = minimo;
