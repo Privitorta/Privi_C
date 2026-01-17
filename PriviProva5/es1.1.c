@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------------
-ES 1.3 V2
+ES 1.1
 Data in ingresso una stringa di cui non è nota a priori la dimensione, creare 
 dinamicamente altre due liste inserendo nella prima tutti i caratteri alfabetici 
 maiuscoli e nella seconda tutti i caratteri alfabetici minuscoli. Ignora tutti i
