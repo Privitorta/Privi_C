@@ -1,6 +1,6 @@
 ## Privi_C
 
-Esercizi di programmazione in C tratti da tracce d'esame di Programmazione (Laboratorio), A.A. 2024/25, prof. Matteo Luperto (UNIMI, SSRI)
+Esercizi universitari di programmazione in C.
 
 ### Compilazione
 
