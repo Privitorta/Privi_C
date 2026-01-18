@@ -9,12 +9,12 @@ NOTA: Usare la struttura dati più adatta e motivare la scelta.
 Ingresso:
 8
 Uscita:
-(1,7),(2,6),(3,5)
+(1,7) (2,6) (3,5)
 
 Ingresso:
 11
 Uscita:
-(1,10),(2,9),(3,8),(4,7),(5,6)
+(1,10) (2,9) (3,8) (4,7) (5,6)
 ------------------------------------------------------------------------------------*/
 
 #include <stdio.h>
@@ -34,9 +34,9 @@ nodoCoppia* coppie(int n) {
     nodoCoppia* testa = NULL;
     nodoCoppia* coda = NULL;
 
-    // per trovare delle coppie tali che la loro somma sia n basta un ciclo che va da 
-    // 1 fino a meno della metà di n, perchè se il primo addendo è x il secondo 
-    // sarà sempre n-x. uso il limite x < n/2 così escludo 0, le coppie identiche e i duplicati
+    // per trovare delle coppie i,j tali che i+j=n basta un ciclo che va da 
+    // 1 fino a meno della metà di n, se il primo addendo è i, il secondo 
+    // sarà sempre n-i. uso il limite x < n/2 così escludo 0, le coppie identiche e i duplicati
 
     // itero fino a n/2 escludendo il centro esatto
     for (int i=1; i<(float)n/2; i++) {
